@@ -94,6 +94,36 @@ python scripts/hardware/teleop_dual_arx_r5_hardware.py
 
 This script initializes the [`ARXR5TeleopController`](xrobotoolkit_teleop/hardware/arx_r5_teleop_controller.py) for dual arm control with built-in grippers.
 
+### Running Franka3 Hardware Demo
+
+To run the teleoperation demo with a Franka3 arm:
+
+```bash
+python scripts/hardware/teleop_franka3_hardware.py --use-mock-driver
+```
+
+This script initializes the [`Franka3TeleopController`](xrobotoolkit_teleop/hardware/franka3_teleop_controller.py) and expects a Franka3 URDF
+for the Placo IK model with joints `panda_joint1`-`panda_joint7` and end-effector link `panda_hand`.
+Provide your URDF via `--robot-urdf-path` and implement a hardware driver in
+[`xrobotoolkit_teleop/hardware/interface/franka3.py`](xrobotoolkit_teleop/hardware/interface/franka3.py) to connect to the real robot.
+
+#### Real hardware test checklist (Franka3)
+
+1. **Safety setup**
+   - Ensure the emergency stop works and the robot workspace is clear.
+   - Confirm the Franka controller is in the correct mode for external control.
+2. **Driver and network**
+   - Verify IP connectivity to the robot controller.
+   - Provide a `Franka3DriverBase` implementation that can stream joint targets and gripper width.
+3. **Dry run**
+   - Run with `--use-mock-driver` to validate XR inputs and IK behavior without hardware.
+4. **Low-speed hardware test**
+   - Start the real driver at low velocity/acceleration limits and small `--scale-factor`.
+   - Keep the controller grips released until you are ready to enable motion.
+5. **Validation**
+   - Confirm joint feedback and gripper commands are logged to `logs/franka3`.
+   - Slowly test end-effector motion and gripper open/close under supervision.
+
 ### Running Galaxea R1 Lite Humanoid Demo
 
 To run the teleoperation demo with the Galaxea R1 Lite humanoid robot:
