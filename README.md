@@ -94,6 +94,19 @@ python scripts/hardware/teleop_dual_arx_r5_hardware.py
 
 This script initializes the [`ARXR5TeleopController`](xrobotoolkit_teleop/hardware/arx_r5_teleop_controller.py) for dual arm control with built-in grippers.
 
+### Running Franka3 MuJoCo Simulation Demo
+
+To validate Franka3 teleoperation in simulation before real hardware:
+
+```bash
+python scripts/simulation/teleop_franka3_mujoco.py \
+  --xml-path assets/franka3/franka3_mujoco.xml \
+  --robot-urdf-path assets/franka3/franka3.urdf
+```
+
+This script initializes the [`MujocoTeleopController`](xrobotoolkit_teleop/simulation/mujoco_teleop_controller.py)
+with the Franka3 model and starts the teleoperation loop in MuJoCo.
+
 ### Running Franka3 Hardware Demo
 
 To run the teleoperation demo with a Franka3 arm:

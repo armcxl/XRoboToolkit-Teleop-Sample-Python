@@ -127,9 +127,10 @@
     python scripts/hardware/teleop_dual_ur5e_hardware.py
     ```
 
-# Franka3 Hardware teleoperation
-- Robot definition files: only `.urdf` is needed. The URDF must contain the joint names
-  `panda_joint1`-`panda_joint7` and the end-effector link `panda_hand`.
+# Franka3 Simulation (MuJoCo) teleoperation
+- Robot definition files: `.xml` and `.urdf` are needed. They must share joint/link names.
+  The URDF must contain the joint names `panda_joint1`-`panda_joint7` and the end-effector link
+  `panda_hand`. The MuJoCo XML should define a mocap target body named `right_target`.
 - Config: single-arm configuration with a parallel gripper width command.
   ```python
   DEFAULT_FRANKA3_MANIPULATOR_CONFIG = {
@@ -147,7 +148,17 @@
       },
   }
   ```
-- Run the teleoperation script (mock driver by default):
+- Run the MuJoCo teleoperation script first:
+  ```bash
+  python scripts/simulation/teleop_franka3_mujoco.py \
+    --xml-path assets/franka3/franka3_mujoco.xml \
+    --robot-urdf-path assets/franka3/franka3.urdf
+  ```
+
+# Franka3 Hardware teleoperation
+- Robot definition files: only `.urdf` is needed. The URDF must contain the joint names
+  `panda_joint1`-`panda_joint7` and the end-effector link `panda_hand`.
+- After validating in simulation, run the hardware teleoperation script (mock driver by default):
   ```bash
   python scripts/hardware/teleop_franka3_hardware.py --use-mock-driver
   ```
