@@ -154,6 +154,10 @@
     --xml-path assets/franka3/franka3_mujoco.xml \
     --robot-urdf-path assets/franka3/franka3.urdf
   ```
+  - If you want a quick syntax check with visible output, use:
+    ```bash
+    python -m compileall -f -v scripts/simulation/teleop_franka3_mujoco.py
+    ```
 
 # Franka3 Hardware teleoperation
 - Robot definition files: only `.urdf` is needed. The URDF must contain the joint names
