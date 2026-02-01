@@ -10,8 +10,8 @@ def _default_fr3_path(*parts: str) -> str:
 
 
 def main(
-    xml_path: str = _default_fr3_path("mujoco_menagerie/franka_fr3/fr3.xml"),
-    robot_urdf_path: str = _default_fr3_path("mujoco_menagerie/franka_fr3/fr3.urdf"),
+    xml_path: str = _default_fr3_path("../mujoco_menagerie/franka_fr3/fr3.xml"),
+    robot_urdf_path: str = _default_fr3_path("fr3.urdf"),
     link_name: str = "fr3_hand",
     vis_target: str = "target",
     scale_factor: float = 1.2,
