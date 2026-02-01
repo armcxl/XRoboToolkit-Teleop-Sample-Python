@@ -76,6 +76,7 @@ Run the FR3 MuJoCo demo script (defaults to `~/cxl/franka_description/mujoco_men
 ```bash
 python scripts/simulation/teleop_fr3_mujoco.py
 ```
+If your MJCF uses a different mocap body name, pass `--vis-target <name>`. When the default `target` is missing, the script will fall back to the only available mocap body (if there is exactly one); otherwise it will list available mocap bodies and ask you to choose.
 
 ### Running the Placo Visualization Demo
 
