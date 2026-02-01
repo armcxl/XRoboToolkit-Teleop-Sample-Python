@@ -29,6 +29,29 @@ This project provides a framework for controlling robots in robot hardware and M
     bash setup.sh
     ```
 
+### Installing MuJoCo without polluting an existing pico env
+If you already have a `pico` environment (or any env you want to keep clean), install MuJoCo in a **separate** virtual environment. This avoids dependency conflicts (e.g., different versions of `numpy`, `glfw`, or `PyOpenGL`).
+
+**Option A: Conda (recommended)**
+```bash
+conda create -n mujoco-teleop python=3.10 -y
+conda activate mujoco-teleop
+pip install --upgrade pip
+pip install mujoco==3.2.2
+```
+
+**Option B: venv**
+```bash
+python -m venv .venv-mujoco
+source .venv-mujoco/bin/activate
+pip install --upgrade pip
+pip install mujoco==3.2.2
+```
+
+**Notes**
+- Keep `pico` and `mujoco-teleop` separate: do **not** `pip install mujoco` inside `pico`.
+- If you need GPU acceleration, ensure you have the correct NVIDIA drivers and `libGL` libraries installed for your system.
+
 ## Usage
 Use the following instructions to run example scripts. For a more detailed description, please refer to [`teleop_details.md`](teleop_details.md).
 
@@ -40,6 +63,20 @@ To run the teleoperation demo with a UR5e robot in MuJoCo simulation:
 python scripts/simulation/teleop_dual_ur5e_mujoco.py
 ```
 This script initializes the [`MujocoTeleopController`](xrobotoolkit_teleop/simulation/mujoco_teleop_controller.py) with the UR5e model and starts the teleoperation loop.
+
+### Using the Menagerie FR3 assets in MuJoCo
+If you are working from `~/cxl/franka_description`, use the Menagerie FR3 model that is already tuned for MuJoCo:
+
+- **FR3 MJCF entrypoint:** `mujoco_menagerie/franka_fr3/fr3.xml`
+- **Important:** Use the entire `mujoco_menagerie/franka_fr3/` directory (including `assets/`), not just the XML file.
+
+When building the FR3 simulation, rely on the **FRANKA** content under `mujoco_menagerie` to generate or reference all required URDF and XML assets, then launch the FRANKA simulation from those files.
+
+Run the FR3 MuJoCo demo script (defaults to `~/cxl/franka_description/mujoco_menagerie/franka_fr3/`):
+```bash
+python scripts/simulation/teleop_fr3_mujoco.py
+```
+If your MJCF uses a different mocap body name, pass `--vis-target <name>`. When the default `target` is missing, the script will fall back to the only available mocap body (if there is exactly one); otherwise it will list available mocap bodies and ask you to choose.
 
 ### Running the Placo Visualization Demo
 
